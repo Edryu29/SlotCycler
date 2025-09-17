@@ -25,10 +25,11 @@ public record SlotCyclerProvider(Inventory inventory) implements SlotCyclingProv
     }
 
     private int getFilledSlot(int selected, boolean forward) {
-        int inventoryRows = this.inventory.items.size() / Inventory.getSelectionSize();
+        int inventoryRows = 18 / Inventory.getSelectionSize();
         for (int i = 1; i < inventoryRows; i++) {
             int slot = ((i * (forward ? -1 : 1) + inventoryRows) % inventoryRows * Inventory.getSelectionSize() +
-                    selected) % this.inventory.items.size();
+                    selected) % 18;
+            if (slot >= 9 && slot < 18) slot += 18;
             if (Inventory.isHotbarSlot(slot) || !this.inventory.getItem(slot).isEmpty()) {
                 return slot;
             }
